@@ -1,0 +1,214 @@
+﻿<ResourceDictionary
+  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  xmlns:theme="clr-namespace:Microsoft.Windows.Themes;assembly=PresentationFramework.Aero"
+  xmlns:controls="clr-namespace:ProjectIndustries.ProjectRaffles.WpfUI.Controls">
+
+
+  <LinearGradientBrush x:Key="CurrentUserWidget.Static.Background" StartPoint="0,0" EndPoint="0,1">
+    <GradientStop Offset="0.0" Color="Transparent" />
+    <GradientStop Offset="1.0" Color="Transparent" />
+  </LinearGradientBrush>
+  <SolidColorBrush x:Key="CurrentUserWidget.Static.Border" Color="#FFACACAC" />
+  <SolidColorBrush x:Key="CurrentUserWidget.Static.Glyph" Color="#4f4f4f" />
+
+  <SolidColorBrush x:Key="CurrentUserWidget.MouseOver.Glyph" Color="#4f4f4f" />
+
+  <SolidColorBrush x:Key="CurrentUserWidget.Pressed.Background" Color="#1fffffff" />
+  <SolidColorBrush x:Key="CurrentUserWidget.Pressed.Border" Color="#FF5260" />
+  <SolidColorBrush x:Key="CurrentUserWidget.Pressed.Glyph" Color="#4f4f4f" />
+
+  <SolidColorBrush x:Key="CurrentUserWidget.Disabled.Background" Color="#FFF0F0F0" />
+  <SolidColorBrush x:Key="CurrentUserWidget.Disabled.Border" Color="#FFD9D9D9" />
+  <SolidColorBrush x:Key="CurrentUserWidget.Disabled.Glyph" Color="#FFBFBFBF" />
+
+
+
+  <!--
+    =================================================================
+    CurrentUserWidgetItem
+    ==================================================================
+  -->
+  <SolidColorBrush x:Key="CurrentUserWidgetItem.ItemsviewHover.Background" Color="Transparent" />
+  <SolidColorBrush x:Key="CurrentUserWidgetItem.ItemsviewHover.Border" Color="#323232" />
+  <SolidColorBrush x:Key="CurrentUserWidgetItem.ItemsviewSelected.Background" Color="#181818" />
+  <SolidColorBrush x:Key="CurrentUserWidgetItem.ItemsviewSelected.Border" Color="#181818" />
+  <SolidColorBrush x:Key="CurrentUserWidgetItem.ItemsviewSelectedHover.Background" Color="#181818" />
+  <SolidColorBrush x:Key="CurrentUserWidgetItem.ItemsviewSelectedHover.Border" Color="#181818" />
+  <SolidColorBrush x:Key="CurrentUserWidgetItem.ItemsviewSelectedNoFocus.Background" Color="#181818" />
+  <SolidColorBrush x:Key="CurrentUserWidgetItem.ItemsviewSelectedNoFocus.Border" Color="#181818" />
+  <SolidColorBrush x:Key="CurrentUserWidgetItem.ItemsviewFocus.Border" Color="#181818" />
+  <SolidColorBrush x:Key="CurrentUserWidgetItem.ItemsviewHoverFocus.Background" Color="#282828" />
+  <SolidColorBrush x:Key="CurrentUserWidgetItem.ItemsviewHoverFocus.Border" Color="#181818" />
+
+  <Style x:Key="CurrentUserMenuWrapper" TargetType="ToggleButton">
+    <Setter Property="Template">
+      <Setter.Value>
+        <ControlTemplate TargetType="ToggleButton">
+          <ContentPresenter
+            x:Name="PART_ContentPresenter"
+            Margin="{TemplateBinding Padding}"
+            HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+            VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+            RecognizesAccessKey="True"
+            SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+        </ControlTemplate>
+      </Setter.Value>
+    </Setter>
+  </Style>
+
+
+  <Style x:Key="UserMenuItem" TargetType="Button">
+    <Setter Property="Background" Value="Transparent" />
+    <Setter Property="BorderBrush" Value="#323232" />
+    <Setter Property="Foreground" Value="#676767" />
+    <Setter Property="HorizontalAlignment" Value="Stretch" />
+    <Setter Property="HorizontalContentAlignment" Value="Left" />
+    <Setter Property="Padding" Value="12,6" />
+    <Setter Property="BorderThickness" Value="0" />
+    <Setter Property="FontSize" Value="10" />
+    <Setter Property="Template">
+      <Setter.Value>
+        <ControlTemplate TargetType="Button">
+          <Border
+            Width="{TemplateBinding Width}"
+            Background="{TemplateBinding Background}"
+            BorderBrush="{TemplateBinding BorderBrush}"
+            BorderThickness="{TemplateBinding BorderThickness}">
+            <ContentPresenter
+              Margin="{TemplateBinding Padding}"
+              HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+              VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+              RecognizesAccessKey="True"
+              SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+          </Border>
+          <ControlTemplate.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+              <Setter Property="Foreground" Value="#777777" />
+            </Trigger>
+          </ControlTemplate.Triggers>
+        </ControlTemplate>
+      </Setter.Value>
+    </Setter>
+  </Style>
+  <Style TargetType="controls:CurrentUserWidget">
+    <Setter Property="OverridesDefaultStyle" Value="true" />
+    <Setter Property="IsTabStop" Value="false" />
+    <Setter Property="Focusable" Value="false" />
+    <Setter Property="Background" Value="Transparent" />
+    <Setter Property="Template">
+      <Setter.Value>
+        <ControlTemplate TargetType="controls:CurrentUserWidget">
+          <Grid>
+            <Popup
+              x:Name="PART_Popup"
+              Grid.ColumnSpan="2"
+              Margin="1,2"
+              AllowsTransparency="true"
+              IsOpen="{Binding IsDropDownOpen, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
+              Placement="Bottom"
+              PopupAnimation="{DynamicResource {x:Static SystemParameters.ComboBoxPopupAnimationKey}}">
+              <theme:SystemDropShadowChrome
+                x:Name="shadow"
+                MinWidth="{Binding ActualWidth, RelativeSource={RelativeSource TemplatedParent}}"
+                Color="Transparent">
+                <Border
+                  x:Name="DropDownBorder"
+                  Background="#232323"
+                  BorderBrush="Transparent"
+                  BorderThickness="0"
+                  CornerRadius="0 0 10 10">
+                  <StackPanel HorizontalAlignment="Stretch">
+                    <Button
+                      BorderThickness="0,0,0,1"
+                      Command="{TemplateBinding DeactivateCommand}"
+                      Content="Deactivate"
+                      Style="{StaticResource UserMenuItem}" />
+                    <Button
+                      Command="{TemplateBinding LogoutCommand}"
+                      Content="Logout"
+                      Style="{StaticResource UserMenuItem}" />
+                  </StackPanel>
+                </Border>
+              </theme:SystemDropShadowChrome>
+            </Popup>
+
+            <ToggleButton
+              x:Name="wrap"
+              Background="Transparent"
+              IsChecked="{Binding IsDropDownOpen, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
+              Style="{StaticResource CurrentUserMenuWrapper}">
+              <Border
+                x:Name="templateRoot"
+                Padding="{TemplateBinding Padding}"
+                Background="{TemplateBinding Background}"
+                BorderBrush="{TemplateBinding BorderBrush}"
+                BorderThickness="{TemplateBinding BorderThickness}"
+                CornerRadius="3"
+                SnapsToDevicePixels="true">
+
+                <StackPanel Orientation="Horizontal">
+                  <Border
+                    Width="28"
+                    Height="28"
+                    CornerRadius="14">
+                    <Border.Background>
+                      <ImageBrush ImageSource="{Binding Picture, RelativeSource={RelativeSource TemplatedParent}}" />
+                    </Border.Background>
+                  </Border>
+
+
+                  <StackPanel
+                    Margin="13,0,0,0"
+                    VerticalAlignment="Center"
+                    Orientation="Horizontal">
+                    <TextBlock
+                      x:Name="username"
+                      FontSize="12"
+                      Foreground="#FF9AA2"
+                      Text="{TemplateBinding Username}" />
+
+                    <Path
+                      x:Name="Arrow"
+                      Margin="8,0,0,0"
+                      VerticalAlignment="Center"
+                      Data="M5.07281 4.69923L8.32281 1.44923C8.6424 1.12962 8.6424 0.615042 8.32281 0.300875C8.00323 -0.0187081 7.48865 -0.0187081 7.17448 0.300875L4.49865 2.97673L1.82281 0.300875C1.50323 -0.018708 0.988647 -0.018708 0.67448 0.300875C0.517396 0.457959 0.436146 0.669209 0.436146 0.875042C0.436146 1.08088 0.517396 1.29212 0.67448 1.44923L3.92448 4.69923C4.23865 5.01881 4.75865 5.01881 5.07281 4.69923Z"
+                      Fill="#3C3C3C" />
+                  </StackPanel>
+                </StackPanel>
+              </Border>
+            </ToggleButton>
+          </Grid>
+          <ControlTemplate.Triggers>
+            <Trigger Property="IsMouseOver" Value="true">
+              <Setter TargetName="Arrow" Property="Fill" Value="{StaticResource CurrentUserWidget.MouseOver.Glyph}" />
+              <Setter TargetName="wrap" Property="Background" Value="Transparent" />
+            </Trigger>
+            <Trigger Property="IsDropDownOpen" Value="true">
+              <Setter TargetName="Arrow" Property="Fill" Value="{StaticResource CurrentUserWidget.Pressed.Glyph}" />
+            </Trigger>
+            <MultiDataTrigger>
+              <MultiDataTrigger.Conditions>
+                <Condition Binding="{Binding Path=IsMouseOver, RelativeSource={RelativeSource Self}}" Value="true" />
+              </MultiDataTrigger.Conditions>
+              <Setter TargetName="username" Property="Foreground" Value="#FF6A82" />
+            </MultiDataTrigger>
+            <MultiDataTrigger>
+              <MultiDataTrigger.Conditions>
+                <Condition Binding="{Binding Path=IsDropDownOpen, RelativeSource={RelativeSource Self}}" Value="true" />
+              </MultiDataTrigger.Conditions>
+              <Setter TargetName="username" Property="Foreground" Value="#FF6A82" />
+            </MultiDataTrigger>
+            <Trigger Property="IsDropDownOpen" Value="true">
+              <Setter TargetName="Arrow" Property="Fill" Value="{StaticResource CurrentUserWidget.Pressed.Glyph}" />
+            </Trigger>
+            <Trigger Property="IsEnabled" Value="false">
+              <Setter TargetName="Arrow" Property="Fill" Value="{StaticResource CurrentUserWidget.Disabled.Glyph}" />
+            </Trigger>
+          </ControlTemplate.Triggers>
+        </ControlTemplate>
+      </Setter.Value>
+    </Setter>
+  </Style>
+
+</ResourceDictionary>

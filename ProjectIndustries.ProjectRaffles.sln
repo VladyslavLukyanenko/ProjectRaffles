@@ -1,0 +1,45 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30621.155
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProjectIndustries.ProjectRaffles.Test", "src\ProjectIndustries.ProjectRaffles.Test\ProjectIndustries.ProjectRaffles.Test.csproj", "{AFD86604-875A-43E5-B49A-FD2E2EB43EF9}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProjectIndustries.ProjectRaffles", "src\ProjectIndustries.ProjectRaffles\ProjectIndustries.ProjectRaffles.csproj", "{F4CE6E8E-0DBC-403C-BC44-63ED5BF8BC78}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{D5213525-95C9-4F33-AE16-29D300F759D3}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Debug|x64 = Debug|x64
+		Release|Any CPU = Release|Any CPU
+		Release|x64 = Release|x64
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{AFD86604-875A-43E5-B49A-FD2E2EB43EF9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AFD86604-875A-43E5-B49A-FD2E2EB43EF9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AFD86604-875A-43E5-B49A-FD2E2EB43EF9}.Debug|x64.ActiveCfg = Debug|x64
+		{AFD86604-875A-43E5-B49A-FD2E2EB43EF9}.Debug|x64.Build.0 = Debug|x64
+		{AFD86604-875A-43E5-B49A-FD2E2EB43EF9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AFD86604-875A-43E5-B49A-FD2E2EB43EF9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AFD86604-875A-43E5-B49A-FD2E2EB43EF9}.Release|x64.ActiveCfg = Release|x64
+		{AFD86604-875A-43E5-B49A-FD2E2EB43EF9}.Release|x64.Build.0 = Release|x64
+		{F4CE6E8E-0DBC-403C-BC44-63ED5BF8BC78}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{F4CE6E8E-0DBC-403C-BC44-63ED5BF8BC78}.Debug|x64.ActiveCfg = Debug|x64
+		{F4CE6E8E-0DBC-403C-BC44-63ED5BF8BC78}.Debug|x64.Build.0 = Debug|x64
+		{F4CE6E8E-0DBC-403C-BC44-63ED5BF8BC78}.Release|Any CPU.ActiveCfg = Release|x86
+		{F4CE6E8E-0DBC-403C-BC44-63ED5BF8BC78}.Release|x64.ActiveCfg = Release|x64
+		{F4CE6E8E-0DBC-403C-BC44-63ED5BF8BC78}.Release|x64.Build.0 = Release|x64
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{AFD86604-875A-43E5-B49A-FD2E2EB43EF9} = {D5213525-95C9-4F33-AE16-29D300F759D3}
+		{F4CE6E8E-0DBC-403C-BC44-63ED5BF8BC78} = {D5213525-95C9-4F33-AE16-29D300F759D3}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {379F2E72-36CA-4F8C-AAD2-1233FE1B8FF5}
+	EndGlobalSection
+EndGlobal

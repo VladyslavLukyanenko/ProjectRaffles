@@ -1,0 +1,52 @@
+﻿<rxui:ReactiveUserControl
+  x:Class="ProjectIndustries.ProjectRaffles.WpfUI.Views.NavigationMenuView"
+  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+  xmlns:local="clr-namespace:ProjectIndustries.ProjectRaffles.WpfUI.Views"
+  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+  xmlns:root="clr-namespace:ProjectIndustries.ProjectRaffles"
+  xmlns:rxui="http://reactiveui.net"
+  xmlns:vm="clr-namespace:ProjectIndustries.ProjectRaffles.Core.ViewModels"
+  d:DataContext="{d:DesignInstance vm:NavigationMenuViewModel,
+                                   IsDesignTimeCreatable=False}"
+  d:DesignHeight="450"
+  d:DesignWidth="80"
+  x:TypeArguments="vm:NavigationMenuViewModel"
+  mc:Ignorable="d">
+  <Grid VerticalAlignment="Stretch">
+    <Image
+      Width="48"
+      Height="48"
+      HorizontalAlignment="Center"
+      VerticalAlignment="Top"
+      Source="/Assets/LogoTransparent.png" />
+
+    <StackPanel
+      x:Name="NavContainer"
+      Grid.Row="1"
+      VerticalAlignment="Center" />
+    <StackPanel Margin="0,0,0,19" VerticalAlignment="Bottom">
+      <Button
+        HorizontalAlignment="Center"
+        Command="{Binding CheckForUpdatesCommand}"
+        Style="{StaticResource IconButton}">
+        <Button.Content>
+          <Image
+            Width="24"
+            Height="24"
+            Source="/Assets/Icons/icon-refresh.png" />
+        </Button.Content>
+      </Button>
+
+      <TextBlock
+        Height="18"
+        Margin="0,10,0,0"
+        HorizontalAlignment="Center"
+        FontSize="12"
+        Foreground="#4f4f4f"
+        Style="{StaticResource StandardLabel}"
+        Text="{Binding CurrentAppVersion, StringFormat=v\{0\}}" />
+    </StackPanel>
+  </Grid>
+</rxui:ReactiveUserControl>

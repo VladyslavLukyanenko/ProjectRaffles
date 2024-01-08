@@ -1,0 +1,58 @@
+﻿<rxui:ReactiveUserControl
+  x:Class="ProjectIndustries.ProjectRaffles.WpfUI.Views.AddCaptchaView"
+  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  xmlns:controls="clr-namespace:ProjectIndustries.ProjectRaffles.WpfUI.Controls"
+  xmlns:conv="clr-namespace:ProjectIndustries.ProjectRaffles.WpfUI.Infra.Converters"
+  xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+  xmlns:rxui="http://reactiveui.net"
+  xmlns:vm="clr-namespace:ProjectIndustries.ProjectRaffles.Core.ViewModels.Captchas"
+  xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+  d:DataContext="{d:DesignInstance vm:AddCaptchaViewModel,
+                                   IsDesignTimeCreatable=False}"
+  d:DesignHeight="535"
+  d:DesignWidth="1000"
+  x:TypeArguments="vm:AddCaptchaViewModel"
+  mc:Ignorable="d">
+  <Grid>
+    <Button
+      HorizontalAlignment="Stretch"
+      VerticalAlignment="Stretch"
+      Background="#000"
+      Command="{Binding CloseCommand}"
+      Opacity=".47"
+      Style="{StaticResource IconButton}" />
+    <Border
+      Width="300"
+      Height="230"
+      Padding="22,24"
+      HorizontalAlignment="Center"
+      VerticalAlignment="Center"
+      Background="#1F1F1F"
+      CornerRadius="7">
+      <StackPanel>
+        <StackPanel.Resources>
+          <Style BasedOn="{StaticResource StandardLabel}" TargetType="TextBlock">
+            <Setter Property="Margin" Value="0,18,0,4" />
+          </Style>
+          <Style BasedOn="{StaticResource StandardComboBox}" TargetType="ComboBox" />
+          <Style BasedOn="{StaticResource WatermarkTextBox}" TargetType="{x:Type xctk:WatermarkTextBox}" />
+        </StackPanel.Resources>
+        <TextBlock Text="Service" />
+        <ComboBox
+          DisplayMemberPath="Name"
+          ItemsSource="{Binding Resolvers}"
+          SelectedItem="{Binding SelectedResolver}" />
+        <TextBlock Text="API Key" />
+        <xctk:WatermarkTextBox Text="{Binding ApiKey, UpdateSourceTrigger=PropertyChanged}" Watermark="API Key" />
+        <Button
+          Margin="0,20,0,0"
+          Command="{Binding AddCommand}"
+          Content="Add"
+          Style="{StaticResource DangerButton}" />
+      </StackPanel>
+
+    </Border>
+  </Grid>
+</rxui:ReactiveUserControl>

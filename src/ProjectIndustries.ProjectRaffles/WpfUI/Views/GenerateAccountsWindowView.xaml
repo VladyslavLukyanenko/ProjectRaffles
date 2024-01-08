@@ -1,0 +1,220 @@
+<controls:CustomizableWindow
+  x:Class="ProjectIndustries.ProjectRaffles.WpfUI.Views.GenerateAccountsWindowView"
+  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  xmlns:accounts="clr-namespace:ProjectIndustries.ProjectRaffles.Core.ViewModels.Accounts"
+  xmlns:controls="clr-namespace:ProjectIndustries.ProjectRaffles.WpfUI.Controls"
+  xmlns:conv="clr-namespace:ProjectIndustries.ProjectRaffles.WpfUI.Infra.Converters"
+  xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+  xmlns:local="clr-namespace:ProjectIndustries.ProjectRaffles.WpfUI.Views"
+  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+  xmlns:rxui="http://reactiveui.net"
+  xmlns:vm="clr-namespace:ProjectIndustries.ProjectRaffles.Core.ViewModels"
+  xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+  Width="740"
+  Height="450"
+  d:DataContext="{d:DesignInstance accounts:GenerateAccountsWindowViewModel,
+                                   IsDesignTimeCreatable=False}"
+  x:TypeArguments="accounts:GenerateAccountsWindowViewModel"
+  AllowsTransparency="True"
+  Background="{StaticResource MainWindowBackground}"
+  ResizeMode="NoResize"
+  ShowInTaskbar="False"
+  Style="{StaticResource CustomizableWindowStyle}"
+  WindowStartupLocation="CenterOwner"
+  WindowStyle="None"
+  mc:Ignorable="d">
+  <controls:CustomizableWindow.HeaderTemplate>
+    <DataTemplate>
+      <Border
+        Grid.Column="1"
+        Padding="21,0"
+        Background="#121212"
+        BorderBrush="#252525"
+        BorderThickness="0,0,0,1"
+        CornerRadius="10, 10, 0, 0"
+        DataContext="{Binding DataContext, ElementName=root}">
+        <TextBlock VerticalAlignment="Center">
+          <Run
+            FontSize="12"
+            FontWeight="DemiBold"
+            Foreground="#FF5260"
+            Text="Account Generator" />
+          <Run FontSize="9" Foreground="#515151">
+            <Run.Text>
+              <MultiBinding StringFormat="{}  {0}/{1} generated">
+                <Binding Mode="OneWay" Path="GeneratedAccounts.Count" />
+                <Binding Mode="OneWay" Path="Quantity" />
+              </MultiBinding>
+            </Run.Text>
+          </Run>
+        </TextBlock>
+      </Border>
+    </DataTemplate>
+  </controls:CustomizableWindow.HeaderTemplate>
+  <Grid x:Name="root">
+    <Grid.Resources>
+      <ResourceDictionary>
+        <Style BasedOn="{StaticResource StandardLabel}" TargetType="TextBlock">
+          <Setter Property="VerticalAlignment" Value="Top" />
+          <Setter Property="Margin" Value="0,0,0,3" />
+        </Style>
+        <Style BasedOn="{StaticResource StandardComboBox}" TargetType="ComboBox">
+          <Setter Property="Margin" Value="0,0,0,12" />
+        </Style>
+        <Style BasedOn="{StaticResource StandardTextBox}" TargetType="TextBox" />
+        <ResourceDictionary.MergedDictionaries>
+          <ResourceDictionary Source="pack://application:,,,/ProjectIndustries.ProjectRaffles;component/WpfUI/Controls/FluentDataGrid.xaml" />
+        </ResourceDictionary.MergedDictionaries>
+      </ResourceDictionary>
+
+
+    </Grid.Resources>
+    <Grid.ColumnDefinitions>
+      <ColumnDefinition Width="205" />
+      <ColumnDefinition Width="*" />
+    </Grid.ColumnDefinitions>
+
+    <Border
+      Padding="21,15"
+      BorderBrush="#252525"
+      BorderThickness="0,0,1,0">
+      <Grid>
+        <Grid.RowDefinitions>
+          <RowDefinition Height="*" />
+          <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <ScrollViewer VerticalScrollBarVisibility="Auto">
+          <StackPanel>
+            <TextBlock VerticalAlignment="Top" Text="Profile" />
+            <ComboBox
+              DisplayMemberPath="ProfileName"
+              IsEnabled="{Binding PickRandomProfile, Converter={x:Static conv:InverseBooleanConverter.Instance}}"
+              ItemsSource="{Binding Profiles}"
+              SelectedItem="{Binding SelectedProfile}" />
+            <CheckBox
+              Margin="0,0,0,10"
+              Content="Pick random profile"
+              IsChecked="{Binding PickRandomProfile}" />
+
+            <TextBlock VerticalAlignment="Top" Text="Store" />
+            <ComboBox
+              DisplayMemberPath="Name"
+              IsEnabled="{Binding ProfileRetriveStrategySelected}"
+              ItemsSource="{Binding Modules}"
+              SelectedItem="{Binding SelectedModule}" />
+
+            <TextBlock VerticalAlignment="Top" Text="Account Pool" />
+            <ComboBox
+              DisplayMemberPath="Name"
+              IsEnabled="{Binding ProfileRetriveStrategySelected}"
+              ItemsSource="{Binding AccountGroups}"
+              SelectedItem="{Binding SelectedAccountGroup}" />
+
+            <TextBlock VerticalAlignment="Top" Text="New Group Name" />
+            <xctk:WatermarkTextBox
+              Margin="0,0,0,12"
+              IsEnabled="{Binding ProfileRetriveStrategySelected}"
+              Text="{Binding NewAccountGroupName, UpdateSourceTrigger=PropertyChanged}"
+              Watermark="New Accounts Group" />
+
+            <StackPanel x:Name="ConfigurationFieldsSurface" />
+          </StackPanel>
+        </ScrollViewer>
+
+        <Grid Grid.Row="1" Margin="0,10,0,0">
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="65" />
+            <ColumnDefinition Width="*" />
+          </Grid.ColumnDefinitions>
+          <StackPanel>
+            <TextBlock Text="Quantity" />
+            <TextBox Text="{Binding Quantity, UpdateSourceTrigger=PropertyChanged}" />
+          </StackPanel>
+          <Button
+            Grid.Column="1"
+            Margin="10,0,0,0"
+            VerticalAlignment="Bottom"
+            Command="{Binding GenerateCommand}"
+            Content="Create"
+            FontWeight="DemiBold"
+            Style="{StaticResource DangerButton}" />
+        </Grid>
+      </Grid>
+    </Border>
+
+    <Border Grid.Column="1" Padding="14">
+      <DataGrid
+        Grid.Row="1"
+        AutoGenerateColumns="False"
+        CanUserReorderColumns="False"
+        CanUserResizeColumns="False"
+        CanUserResizeRows="False"
+        EnableRowVirtualization="True"
+        FontSize="11"
+        Foreground="#e1e1e1"
+        HorizontalScrollBarVisibility="Auto"
+        IsReadOnly="True"
+        ItemsSource="{Binding GeneratedAccounts}"
+        SelectionMode="Single"
+        SelectionUnit="FullRow">
+        <DataGrid.Columns>
+          <DataGridTextColumn
+            Width="2*"
+            Binding="{Binding ModuleDescriptor.Name}"
+            Header="Site" />
+          <DataGridTextColumn
+            Width="*"
+            Binding="{Binding AccountGroup.Name}"
+            Header="Account Pool" />
+          <DataGridTemplateColumn Width="80" Header="Status">
+            <DataGridTemplateColumn.CellTemplate>
+              <DataTemplate>
+                <StackPanel Orientation="Horizontal">
+                  <TextBlock
+                    VerticalAlignment="Center"
+                    FontSize="11"
+                    Foreground="#00FF94"
+                    Text="Generated" />
+                </StackPanel>
+              </DataTemplate>
+            </DataGridTemplateColumn.CellTemplate>
+          </DataGridTemplateColumn>
+          <DataGridTemplateColumn Width="70" Header="">
+            <DataGridTemplateColumn.CellTemplate>
+              <DataTemplate>
+                <StackPanel Orientation="Horizontal">
+                  <StackPanel.Resources>
+                    <ResourceDictionary>
+                      <Style BasedOn="{StaticResource IconButton}" TargetType="Button">
+                        <Setter Property="VerticalContentAlignment" Value="Center" />
+                        <Setter Property="HorizontalContentAlignment" Value="Center" />
+                      </Style>
+                    </ResourceDictionary>
+                  </StackPanel.Resources>
+                  <Button>
+                    <Button.Content>
+                      <Image
+                        Width="24"
+                        Height="24"
+                        Source="/Assets/Icons/icon-play.png" />
+                    </Button.Content>
+                  </Button>
+                  <Button Command="{Binding DataContext.RemoveAccountCommand, RelativeSource={RelativeSource AncestorType=DataGrid, Mode=FindAncestor}}" CommandParameter="{Binding}">
+                    <Button.Content>
+                      <Image
+                        Width="14"
+                        Height="14"
+                        Source="/Assets/Icons/icon-trash.png" />
+                    </Button.Content>
+                  </Button>
+
+                </StackPanel>
+              </DataTemplate>
+            </DataGridTemplateColumn.CellTemplate>
+          </DataGridTemplateColumn>
+        </DataGrid.Columns>
+      </DataGrid>
+    </Border>
+  </Grid>
+</controls:CustomizableWindow>

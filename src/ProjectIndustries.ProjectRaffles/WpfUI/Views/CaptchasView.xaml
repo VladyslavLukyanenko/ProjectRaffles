@@ -1,0 +1,77 @@
+﻿<rxui:ReactiveUserControl
+  x:Class="ProjectIndustries.ProjectRaffles.WpfUI.Views.CaptchasView"
+  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  xmlns:conv="clr-namespace:ProjectIndustries.ProjectRaffles.WpfUI.Infra.Converters"
+  xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+  xmlns:local="clr-namespace:ProjectIndustries.ProjectRaffles.WpfUI.Views"
+  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+  xmlns:rxui="http://reactiveui.net"
+  xmlns:vm="clr-namespace:ProjectIndustries.ProjectRaffles.Core.ViewModels.Captchas"
+  xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+  d:DataContext="{d:DesignInstance vm:CaptchasViewModel,
+                                   IsDesignTimeCreatable=False}"
+  d:DesignHeight="450"
+  d:DesignWidth="1300"
+  x:TypeArguments="vm:CaptchasViewModel"
+  mc:Ignorable="d">
+  <Grid x:Name="root">
+    <Grid.Resources>
+      <ResourceDictionary>
+        <ResourceDictionary.MergedDictionaries>
+          <ResourceDictionary Source="pack://application:,,,/ProjectIndustries.ProjectRaffles;component/WpfUI/Controls/FluentDataGrid.xaml" />
+        </ResourceDictionary.MergedDictionaries>
+      </ResourceDictionary>
+    </Grid.Resources>
+    <DataGrid
+      AutoGenerateColumns="False"
+      CanUserReorderColumns="False"
+      CanUserResizeColumns="False"
+      CanUserResizeRows="False"
+      EnableRowVirtualization="True"
+      FontSize="11"
+      Foreground="#e1e1e1"
+      HorizontalScrollBarVisibility="Auto"
+      IsReadOnly="True"
+      ItemsSource="{Binding Rows}"
+      SelectionMode="Single"
+      SelectionUnit="FullRow">
+      <DataGrid.Columns>
+        <DataGridTextColumn
+          Width="180"
+          MinWidth="180"
+          Binding="{Binding Provider.ProviderName}"
+          Header="Service" />
+        <DataGridTextColumn
+          Width="*"
+          MinWidth="180"
+          Binding="{Binding Key.Value}"
+          Header="API Key" />
+        <DataGridTemplateColumn
+          Width="75"
+          MinWidth="75"
+          Header="Balance">
+          <DataGridTemplateColumn.CellTemplate>
+            <DataTemplate>
+              <TextBlock Foreground="{Binding IsBalanceHigh, Converter={x:Static conv:BooleanToStatusColorConverter.Instance}}" Text="{Binding Balance, StringFormat=$\{0:N2\}}" />
+            </DataTemplate>
+          </DataGridTemplateColumn.CellTemplate>
+        </DataGridTemplateColumn>
+        <DataGridTemplateColumn Width="30" MinWidth="30">
+          <DataGridTemplateColumn.CellTemplate>
+            <DataTemplate>
+              <Button Command="{Binding RemoveCommand}" Style="{StaticResource IconButton}">
+                <Button.Content>
+                  <Image
+                    Width="14"
+                    Height="14"
+                    Source="/Assets/Icons/icon-trash.png" />
+                </Button.Content>
+              </Button>
+            </DataTemplate>
+          </DataGridTemplateColumn.CellTemplate>
+        </DataGridTemplateColumn>
+      </DataGrid.Columns>
+    </DataGrid>
+  </Grid>
+</rxui:ReactiveUserControl>

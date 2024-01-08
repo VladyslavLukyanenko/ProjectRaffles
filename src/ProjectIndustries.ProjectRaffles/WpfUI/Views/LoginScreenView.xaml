@@ -1,0 +1,126 @@
+﻿<controls:CustomizableWindow
+  x:Class="ProjectIndustries.ProjectRaffles.WpfUI.Views.LoginScreenView"
+  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+  xmlns:local="clr-namespace:ProjectIndustries.ProjectRaffles.WpfUI.Views"
+  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+  xmlns:rxui="http://reactiveui.net"
+  xmlns:vm="clr-namespace:ProjectIndustries.ProjectRaffles.Core.ViewModels"
+  xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+  xmlns:controls="clr-namespace:ProjectIndustries.ProjectRaffles.WpfUI.Controls"
+  xmlns:conv="clr-namespace:ProjectIndustries.ProjectRaffles.WpfUI.Infra.Converters"
+  Width="512"
+  Height="256"
+  d:DataContext="{d:DesignInstance vm:LoginScreenViewModel,
+                                   IsDesignTimeCreatable=False}"
+  x:TypeArguments="vm:LoginScreenViewModel"
+  AllowsTransparency="True"
+  Background="#131313"
+  ResizeMode="NoResize"
+  Style="{StaticResource CustomizableWindowStyle}"
+  WindowStartupLocation="CenterScreen"
+  WindowStyle="None"
+  mc:Ignorable="d">
+  <controls:CustomizableWindow.HeaderTemplate>
+    <DataTemplate>
+      <Border
+        Grid.Column="1"
+        Background="#121212"
+        CornerRadius="10, 10, 0, 0" />
+    </DataTemplate>
+  </controls:CustomizableWindow.HeaderTemplate>
+  <Grid>
+    <Border Padding="20,0,20,30" Style="{StaticResource ContentContainer}">
+      <Grid>
+        <Grid.RowDefinitions>
+          <RowDefinition Height="*" />
+          <RowDefinition Height="Auto" />
+
+        </Grid.RowDefinitions>
+        <Image
+          Height="140"
+          Margin="0,0,0,20"
+          Source="/Assets/LogoTransparent.png" />
+
+        <StackPanel
+          Grid.Row="1"
+          HorizontalAlignment="Center"
+          Orientation="Horizontal">
+          <xctk:WatermarkTextBox
+            Width="320"
+            Margin="0,0,13,0"
+            Padding="12,0"
+            VerticalContentAlignment="Center"
+            Background="#0e0e0e"
+            BorderBrush="#505050"
+            BorderThickness="1"
+            FontSize="14"
+            FontWeight="DemiBold"
+            Foreground="#404040"
+            IsEnabled="{Binding IsBusy, Converter={x:Static conv:InverseBooleanConverter.Instance}}"
+            Text="{Binding LicenseKey, UpdateSourceTrigger=PropertyChanged}"
+            Watermark="License key" />
+          <Button
+            Width="120"
+            Height="34"
+            Padding="0"
+            Command="{Binding LoginCommand}"
+            FontSize="16"
+            Style="{StaticResource StandardButton}">
+            <Button.Content>
+              <StackPanel Orientation="Horizontal">
+                <Image
+                  x:Name="spinner"
+                  Width="24"
+                  Height="24"
+                  Margin="0,0,10,0"
+                  HorizontalAlignment="Center"
+                  VerticalAlignment="Center"
+                  RenderTransformOrigin="0.5, 0.5"
+                  Source="/Assets/Icons/spinner.png"
+                  Visibility="{Binding IsBusy, Converter={x:Static conv:BooleanToVisibilityTypeConverter.Instance}}">
+                  <Image.RenderTransform>
+                    <RotateTransform />
+                  </Image.RenderTransform>
+                  <Image.Triggers>
+                    <EventTrigger RoutedEvent="Image.Loaded">
+                      <BeginStoryboard>
+                        <Storyboard>
+                          <DoubleAnimation
+                            AutoReverse="False"
+                            RepeatBehavior="Forever"
+                            Storyboard.TargetName="spinner"
+                            Storyboard.TargetProperty="(UIElement.RenderTransform).(RotateTransform.Angle)"
+                            From="0"
+                            To="360"
+                            Duration="0:0:1" />
+                        </Storyboard>
+                      </BeginStoryboard>
+                    </EventTrigger>
+                  </Image.Triggers>
+                </Image>
+                <TextBlock VerticalAlignment="Center" Text="Login" />
+              </StackPanel>
+            </Button.Content>
+          </Button>
+        </StackPanel>
+      </Grid>
+    </Border>
+
+    <rxui:ViewModelViewHost
+      Grid.ColumnSpan="2"
+      HorizontalContentAlignment="Stretch"
+      VerticalContentAlignment="Stretch"
+      ViewModel="{Binding Update}">
+      <rxui:ViewModelViewHost.Visibility>
+        <MultiBinding Converter="{x:Static conv:VisibilityMultiConverter.Instance}">
+          <Binding Converter="{x:Static conv:BooleanToVisibilityTypeConverter.Instance}"
+                   Path="Update.IsUpdateAvailable" />
+          <Binding Converter="{x:Static conv:InvertedBooleanToVisibilityTypeConverter.Instance}"
+                   Path="Update.IsAvailableVersionSkipped" />
+        </MultiBinding>
+      </rxui:ViewModelViewHost.Visibility>
+    </rxui:ViewModelViewHost>
+  </Grid>
+</controls:CustomizableWindow>

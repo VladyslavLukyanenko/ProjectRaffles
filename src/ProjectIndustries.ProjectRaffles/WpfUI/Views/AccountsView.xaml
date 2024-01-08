@@ -1,0 +1,195 @@
+﻿<rxui:ReactiveUserControl
+  x:Class="ProjectIndustries.ProjectRaffles.WpfUI.Views.AccountsView"
+  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  xmlns:conv="clr-namespace:ProjectIndustries.ProjectRaffles.WpfUI.Infra.Converters"
+  xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+  xmlns:local="clr-namespace:ProjectIndustries.ProjectRaffles.WpfUI.Views"
+  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+  xmlns:rxui="http://reactiveui.net"
+  xmlns:vm="clr-namespace:ProjectIndustries.ProjectRaffles.Core.ViewModels"
+  xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+  xmlns:accounts="clr-namespace:ProjectIndustries.ProjectRaffles.Core.ViewModels.Accounts"
+  d:DataContext="{d:DesignInstance accounts:AccountsViewModel,
+                                   IsDesignTimeCreatable=False}"
+  d:DesignHeight="450"
+  d:DesignWidth="1300"
+  x:TypeArguments="accounts:AccountsViewModel"
+  mc:Ignorable="d">
+  <Grid x:Name="root" Margin="32,23">
+    <Grid.Resources>
+      <ResourceDictionary>
+        <Style TargetType="Button">
+          <Setter Property="Margin" Value="20,0,0,0" />
+        </Style>
+        <Style BasedOn="{StaticResource StandardComboBox}" TargetType="ComboBox" />
+        <Style BasedOn="{StaticResource StandardLabel}" TargetType="TextBlock" />
+        <Style BasedOn="{StaticResource StandardTextBox}" TargetType="TextBox" />
+        <ResourceDictionary.MergedDictionaries>
+          <ResourceDictionary Source="pack://application:,,,/ProjectIndustries.ProjectRaffles;component/WpfUI/Controls/FluentDataGrid.xaml" />
+        </ResourceDictionary.MergedDictionaries>
+      </ResourceDictionary>
+    </Grid.Resources>
+    <Grid.RowDefinitions>
+      <RowDefinition Height="Auto" />
+      <RowDefinition />
+    </Grid.RowDefinitions>
+
+    <Grid Grid.Row="1">
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition />
+        <ColumnDefinition />
+      </Grid.ColumnDefinitions>
+      <Border
+        Margin="0,0,24,0"
+        Padding="24,13"
+        Background="#151515"
+        CornerRadius="7">
+        <Grid>
+          <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+          </Grid.RowDefinitions>
+          <TextBlock Margin="0,0,0,6" Text="Account Pool" />
+          <ComboBox
+            Grid.Row="1"
+            Height="33"
+            DisplayMemberPath="Name"
+            ItemsSource="{Binding AccountGroups}"
+            SelectedItem="{Binding SelectedAccountGroup}" />
+
+          <xctk:WatermarkTextBox
+            Grid.Row="2"
+            Grid.ColumnSpan="2"
+            Margin="0,17"
+            AcceptsReturn="True"
+            Text="{Binding RawAccounts, UpdateSourceTrigger=PropertyChanged}"
+            Watermark="Insert accounts... account-email:your-password" />
+
+          <TextBlock
+            Grid.Row="3"
+            Margin="0,0,0,6"
+            Text="List Name" />
+          <xctk:WatermarkTextBox
+            Grid.Row="4"
+            Margin="0,0,0,12"
+            Text="{Binding NewGroupName, UpdateSourceTrigger=PropertyChanged}"
+            Watermark="List Name" />
+          <Button
+            Grid.Row="5"
+            Height="34"
+            Command="{Binding CreateCommand}"
+            Content="Create Group"
+            FontSize="16"
+            Style="{StaticResource DangerButton}" />
+        </Grid>
+      </Border>
+      <Grid Grid.Column="1" Margin="24,0,0,0">
+        <Grid.RowDefinitions>
+          <RowDefinition Height="Auto" />
+          <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Grid>
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition />
+            <ColumnDefinition Width="auto" />
+          </Grid.ColumnDefinitions>
+          <StackPanel Orientation="Horizontal">
+            <TextBlock
+              Height="21"
+              FontSize="14"
+              FontWeight="SemiBold"
+              Foreground="White"
+              Text="{Binding SelectedAccountGroup.Name}" />
+            <TextBlock
+              Margin="24,0,0,0"
+              FontSize="11"
+              Foreground="#454545"
+              Text="{Binding SelectedAccountGroup.Accounts.Count, StringFormat=\{0\} accounts}" />
+          </StackPanel>
+
+
+          <Button
+            Grid.Column="1"
+            Command="{Binding RemoveGroupCommand}"
+            Content="Delete Group"
+            Style="{StaticResource DangerButton}" />
+        </Grid>
+        <DataGrid
+          Grid.Row="1"
+          Margin="0,19,0,0"
+          AutoGenerateColumns="False"
+          CanUserReorderColumns="False"
+          CanUserResizeColumns="False"
+          CanUserResizeRows="False"
+          EnableRowVirtualization="True"
+          FontSize="11"
+          Foreground="#e1e1e1"
+          HorizontalScrollBarVisibility="Auto"
+          IsReadOnly="True"
+          ItemsSource="{Binding AccountRows}"
+          SelectionMode="Single"
+          SelectionUnit="FullRow">
+          <DataGrid.Columns>
+            <DataGridTextColumn
+              Width="*"
+              MinWidth="180"
+              Binding="{Binding Account.Email}"
+              Header="Email" />
+            <DataGridTemplateColumn Width="156" Header="Password">
+              <DataGridTemplateColumn.CellTemplate>
+                <DataTemplate>
+                  <Grid>
+                    <TextBlock Text="********" Visibility="{Binding IsPasswordVisible, Converter={x:Static conv:InvertedBooleanToVisibilityTypeConverter.Instance}}" />
+                    <TextBlock Text="{Binding Account.Password}" Visibility="{Binding IsPasswordVisible, Converter={x:Static conv:BooleanToVisibilityTypeConverter.Instance}}" />
+                  </Grid>
+                </DataTemplate>
+              </DataGridTemplateColumn.CellTemplate>
+            </DataGridTemplateColumn>
+            <DataGridTemplateColumn
+              Width="100"
+              MinWidth="100"
+              Header="Actions">
+              <DataGridTemplateColumn.CellTemplate>
+                <DataTemplate>
+                  <StackPanel Orientation="Horizontal">
+                    <StackPanel.Resources>
+                      <ResourceDictionary>
+                        <Style BasedOn="{StaticResource IconButton}" TargetType="Button">
+                          <Setter Property="Margin" Value="7,0" />
+                          <Setter Property="VerticalContentAlignment" Value="Center" />
+                          <Setter Property="HorizontalContentAlignment" Value="Center" />
+                        </Style>
+                      </ResourceDictionary>
+                    </StackPanel.Resources>
+                    <Button Command="{Binding TogglePasswordVisibility}">
+                      <Button.Content>
+                        <Image
+                          Width="14"
+                          Height="14"
+                          Source="/Assets/Icons/icon-invisible.png" />
+                      </Button.Content>
+                    </Button>
+                    <Button Command="{Binding DataContext.RemoveAccountCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=DataGrid}}" CommandParameter="{Binding}">
+                      <Button.Content>
+                        <Image
+                          Width="14"
+                          Height="14"
+                          Source="/Assets/Icons/icon-trash.png" />
+                      </Button.Content>
+                    </Button>
+
+                  </StackPanel>
+                </DataTemplate>
+              </DataGridTemplateColumn.CellTemplate>
+            </DataGridTemplateColumn>
+          </DataGrid.Columns>
+        </DataGrid>
+      </Grid>
+    </Grid>
+  </Grid>
+</rxui:ReactiveUserControl>

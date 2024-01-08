@@ -1,0 +1,94 @@
+<rxui:ReactiveUserControl
+  x:Class="ProjectIndustries.ProjectRaffles.WpfUI.Views.UpdateView"
+  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+  xmlns:local="clr-namespace:ProjectIndustries.ProjectRaffles.WpfUI.Views"
+  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+  xmlns:rxui="http://reactiveui.net"
+  xmlns:vm="clr-namespace:ProjectIndustries.ProjectRaffles.Core.ViewModels"
+  xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+  xmlns:conv="clr-namespace:ProjectIndustries.ProjectRaffles.WpfUI.Infra.Converters"
+  d:DataContext="{d:DesignInstance vm:UpdateViewModel,
+                                   IsDesignTimeCreatable=False}"
+  d:DesignHeight="50"
+  d:DesignWidth="800"
+  x:TypeArguments="vm:UpdateViewModel"
+  mc:Ignorable="d">
+  <Grid>
+    <Border
+      HorizontalAlignment="Stretch"
+      VerticalAlignment="Stretch"
+      Background="#7F000000" />
+    <Border
+      Width="300"
+      Padding="28,21,28,28"
+      VerticalAlignment="Center"
+      Background="#232323"
+      CornerRadius="10">
+      <StackPanel>
+        <TextBlock
+          Height="40"
+          Padding="0,10"
+          FontSize="14"
+          FontWeight="DemiBold"
+          Visibility="{Binding IsInProgress, Converter={x:Static conv:InvertedBooleanToVisibilityTypeConverter.Instance}}">
+          <Run Foreground="#FF5260" Text="{Binding NextVersion, Mode=OneWay, StringFormat={}Update \{0\}}" />
+          <Run Foreground="#494949" Text="has now been pushed" />
+        </TextBlock>
+
+        <StackPanel Visibility="{Binding IsInProgress, Converter={x:Static conv:BooleanToVisibilityTypeConverter.Instance}}">
+          <Grid>
+            <Grid.ColumnDefinitions>
+              <ColumnDefinition Width="*" />
+              <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <TextBlock
+              Margin="0,0,0,10"
+              FontSize="13"
+              Foreground="#494949"
+              Text="Downloading installer" />
+            <TextBlock
+              Grid.Column="1"
+              Margin="10,0,0,0"
+              FontSize="14">
+              <Run Foreground="#FF5260" Text="{Binding Progress, StringFormat=\{0\}%}" />
+              <Run FontSize="10" Foreground="#494949">
+                <Run.Text>
+                  <MultiBinding StringFormat="{}({0}/{1} MB)">
+                    <Binding Mode="OneWay" Path="DownloadedMb" />
+                    <Binding Mode="OneWay" Path="TotalSizeMb" />
+                  </MultiBinding>
+                </Run.Text>
+              </Run>
+            </TextBlock>
+          </Grid>
+          <ProgressBar
+            Height="20"
+            Foreground="#FF5260"
+            Value="{Binding Progress}" />
+        </StackPanel>
+        <StackPanel Margin="0,14,0,0" Orientation="Horizontal">
+          <StackPanel.Resources>
+            <Style BasedOn="{StaticResource DangerButton}" TargetType="Button">
+              <Setter Property="Width" Value="104" />
+              <Setter Property="Height" Value="33" />
+              <Setter Property="FontSize" Value="14" />
+            </Style>
+          </StackPanel.Resources>
+          <Button Command="{Binding PrepareToUpdateCommand}">
+            Update
+          </Button>
+          <Button
+            Margin="11,0,0,0"
+            Background="#3A020202"
+            IsEnabled="{Binding PreventCancellation, Converter={x:Static conv:InverseBooleanConverter.Instance}}"
+            Command="{Binding CancelDownloadingCommand}"
+            Foreground="#464646">
+            Cancel
+          </Button>
+        </StackPanel>
+      </StackPanel>
+    </Border>
+  </Grid>
+</rxui:ReactiveUserControl>

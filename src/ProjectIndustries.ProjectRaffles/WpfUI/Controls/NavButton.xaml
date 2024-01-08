@@ -1,0 +1,60 @@
+﻿<ResourceDictionary
+  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  xmlns:converters="clr-namespace:ProjectIndustries.ProjectRaffles.WpfUI.Infra.Converters"
+  xmlns:controls="clr-namespace:ProjectIndustries.ProjectRaffles.WpfUI.Controls">
+
+  <converters:DoubleToCornerRadiusConverter x:Key="DoubleToCorderRadiusConverter" />
+  <LinearGradientBrush x:Key="NavButtonActive" StartPoint="0,0" EndPoint="1,1">
+    <GradientStop Offset="0" Color="#0DFFFFFF" />
+    <GradientStop Offset="1" Color="#0DDBDBDB" />
+  </LinearGradientBrush>
+
+  <Style TargetType="controls:NavButton">
+    <Setter Property="Background" Value="Transparent" />
+    <Setter Property="Height" Value="41" />
+    <Setter Property="Width" Value="41" />
+    <Setter Property="Template">
+      <Setter.Value>
+        <ControlTemplate TargetType="controls:NavButton">
+          <Grid Width="{TemplateBinding Width}" Height="{TemplateBinding Height}">
+            <Border
+              x:Name="Container"
+              Background="{TemplateBinding Background}"
+              CornerRadius="{TemplateBinding Height,
+                                             Converter={StaticResource DoubleToCorderRadiusConverter}}">
+              <Grid>
+                <Image
+                  x:Name="IconRegular"
+                  Width="21"
+                  Height="21"
+                  Source="{TemplateBinding RegularIconSrc,
+                                           Converter={x:Static converters:RawPathToImageSourceConverter.Instance}}"
+                  Stretch="Fill" />
+
+                <Image
+                  x:Name="IconActive"
+                  Width="21"
+                  Height="21"
+                  Source="{TemplateBinding ActiveIconSrc,
+                                           Converter={x:Static converters:RawPathToImageSourceConverter.Instance}}"
+                  Stretch="Fill"
+                  Visibility="Collapsed" />
+              </Grid>
+            </Border>
+          </Grid>
+          <ControlTemplate.Triggers>
+            <Trigger Property="IsActive" Value="True">
+              <Setter TargetName="Container" Property="Background" Value="{StaticResource NavButtonActive}" />
+              <Setter TargetName="IconRegular" Property="Visibility" Value="Collapsed" />
+              <Setter TargetName="IconActive" Property="Visibility" Value="Visible" />
+            </Trigger>
+            <Trigger Property="IsMouseOver" Value="True">
+              <Setter TargetName="Container" Property="Background" Value="{StaticResource NavButtonActive}" />
+            </Trigger>
+          </ControlTemplate.Triggers>
+        </ControlTemplate>
+      </Setter.Value>
+    </Setter>
+  </Style>
+</ResourceDictionary>

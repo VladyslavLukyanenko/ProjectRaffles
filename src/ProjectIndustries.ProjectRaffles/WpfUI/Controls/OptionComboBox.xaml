@@ -1,0 +1,304 @@
+<ResourceDictionary
+  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  xmlns:controls="clr-namespace:ProjectIndustries.ProjectRaffles.WpfUI.Controls"
+  xmlns:conv="clr-namespace:ProjectIndustries.ProjectRaffles.WpfUI.Infra.Converters"
+  xmlns:theme="clr-namespace:Microsoft.Windows.Themes;assembly=PresentationFramework.Aero">
+
+  <LinearGradientBrush x:Key="ComboBox.Static.Background" StartPoint="0,0" EndPoint="0,1">
+    <GradientStop Offset="0.0" Color="Transparent" />
+    <GradientStop Offset="1.0" Color="Transparent" />
+  </LinearGradientBrush>
+  <SolidColorBrush x:Key="ComboBox.Static.Glyph" Color="#4f4f4f" />
+  <SolidColorBrush x:Key="ComboBox.Static.Editable.Background" Color="#FFFFFFFF" />
+  <SolidColorBrush x:Key="ComboBox.Static.Editable.Border" Color="#FFABADB3" />
+  <SolidColorBrush x:Key="ComboBox.Static.Editable.Button.Background" Color="Transparent" />
+  <SolidColorBrush x:Key="ComboBox.Static.Editable.Button.Border" Color="Transparent" />
+
+  <SolidColorBrush x:Key="ComboBox.MouseOver.Background" Color="#0fffffff" />
+  <SolidColorBrush x:Key="ComboBox.MouseOver.Border" Color="#FF5260" />
+  <SolidColorBrush x:Key="ComboBox.MouseOver.Glyph" Color="#4f4f4f" />
+  <SolidColorBrush x:Key="ComboBox.MouseOver.Editable.Background" Color="#FFFFFFFF" />
+  <SolidColorBrush x:Key="ComboBox.MouseOver.Editable.Border" Color="#FF7EB4EA" />
+  <LinearGradientBrush x:Key="ComboBox.MouseOver.Editable.Button.Background" StartPoint="0,0" EndPoint="0,1">
+    <GradientStop Offset="0.0" Color="#FFEBF4FC" />
+    <GradientStop Offset="1.0" Color="#FFDCECFC" />
+  </LinearGradientBrush>
+  <SolidColorBrush x:Key="ComboBox.MouseOver.Editable.Button.Border" Color="#FF7EB4EA" />
+
+  <SolidColorBrush x:Key="ComboBox.Pressed.Background" Color="#202020" />
+  <SolidColorBrush x:Key="ComboBox.Pressed.Border" Color="#FF5260" />
+  <SolidColorBrush x:Key="ComboBox.Pressed.Glyph" Color="#4f4f4f" />
+  <SolidColorBrush x:Key="ComboBox.Pressed.Editable.Background" Color="#FFFFFFFF" />
+  <SolidColorBrush x:Key="ComboBox.Pressed.Editable.Border" Color="#FF569DE5" />
+  <LinearGradientBrush x:Key="ComboBox.Pressed.Editable.Button.Background" StartPoint="0,0" EndPoint="0,1">
+    <GradientStop Offset="0.0" Color="#FFDAEBFC" />
+    <GradientStop Offset="1.0" Color="#FFC4E0FC" />
+  </LinearGradientBrush>
+  <SolidColorBrush x:Key="ComboBox.Pressed.Editable.Button.Border" Color="#FF569DE5" />
+
+  <SolidColorBrush x:Key="ComboBox.Disabled.Background" Color="#FFF0F0F0" />
+  <SolidColorBrush x:Key="ComboBox.Disabled.Border" Color="Transparent" />
+  <SolidColorBrush x:Key="ComboBox.Disabled.Glyph" Color="#FFBFBFBF" />
+  <SolidColorBrush x:Key="ComboBox.Disabled.Editable.Background" Color="#FFFFFFFF" />
+  <SolidColorBrush x:Key="ComboBox.Disabled.Editable.Border" Color="#FFBFBFBF" />
+  <SolidColorBrush x:Key="ComboBox.Disabled.Editable.Button.Background" Color="Transparent" />
+  <SolidColorBrush x:Key="ComboBox.Disabled.Editable.Button.Border" Color="Transparent" />
+
+
+  <!--
+    =================================================================
+    ComboBoxItem
+    ==================================================================
+  -->
+  <SolidColorBrush x:Key="ComboBoxItem.ItemsviewHover.Background" Color="#282828" />
+  <SolidColorBrush x:Key="ComboBoxItem.ItemsviewHover.Border" Color="#181818" />
+  <SolidColorBrush x:Key="ComboBoxItem.ItemsviewSelected.Background" Color="#181818" />
+  <SolidColorBrush x:Key="ComboBoxItem.ItemsviewSelected.Border" Color="#181818" />
+  <SolidColorBrush x:Key="ComboBoxItem.ItemsviewSelectedHover.Background" Color="#181818" />
+  <SolidColorBrush x:Key="ComboBoxItem.ItemsviewSelectedHover.Border" Color="#181818" />
+  <SolidColorBrush x:Key="ComboBoxItem.ItemsviewSelectedNoFocus.Background" Color="#181818" />
+  <SolidColorBrush x:Key="ComboBoxItem.ItemsviewSelectedNoFocus.Border" Color="#181818" />
+  <SolidColorBrush x:Key="ComboBoxItem.ItemsviewFocus.Border" Color="#181818" />
+  <SolidColorBrush x:Key="ComboBoxItem.ItemsviewHoverFocus.Background" Color="#282828" />
+  <SolidColorBrush x:Key="ComboBoxItem.ItemsviewHoverFocus.Border" Color="#181818" />
+
+
+  <Style x:Key="OptionComboBoxItem" TargetType="{x:Type ComboBoxItem}">
+    <Setter Property="SnapsToDevicePixels" Value="True" />
+    <Setter Property="Padding" Value="13,4" />
+    <Setter Property="HorizontalContentAlignment" Value="{Binding HorizontalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}" />
+    <Setter Property="VerticalContentAlignment" Value="{Binding VerticalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}" />
+    <Setter Property="Background" Value="Transparent" />
+    <Setter Property="Foreground" Value="#4B4B4B" />
+    <Setter Property="BorderBrush" Value="Transparent" />
+    <Setter Property="BorderThickness" Value="0" />
+    <Setter Property="Template">
+      <Setter.Value>
+        <ControlTemplate TargetType="{x:Type ComboBoxItem}">
+          <Border
+            x:Name="Bd"
+            Padding="{TemplateBinding Padding}"
+            Background="{TemplateBinding Background}"
+            BorderBrush="{TemplateBinding BorderBrush}"
+            BorderThickness="{TemplateBinding BorderThickness}"
+            CornerRadius="5"
+            SnapsToDevicePixels="true">
+            <StackPanel Orientation="Horizontal">
+              <RadioButton Margin="0,0,10,0" IsChecked="{Binding IsSelected, RelativeSource={RelativeSource AncestorType={x:Type ComboBoxItem}}}" />
+              <ContentPresenter
+                HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+            </StackPanel>
+          </Border>
+          <ControlTemplate.Triggers>
+            <Trigger Property="IsEnabled" Value="False">
+              <Setter TargetName="Bd" Property="Opacity" Value=".5" />
+            </Trigger>
+            <MultiTrigger>
+              <MultiTrigger.Conditions>
+                <Condition Property="IsSelected" Value="False" />
+                <Condition Property="IsMouseOver" Value="True" />
+                <Condition Property="UIElement.IsKeyboardFocused" Value="False" />
+              </MultiTrigger.Conditions>
+              <Setter TargetName="Bd" Property="Background" Value="{StaticResource ComboBoxItem.ItemsviewHover.Background}" />
+              <Setter TargetName="Bd" Property="BorderBrush" Value="{StaticResource ComboBoxItem.ItemsviewHover.Border}" />
+            </MultiTrigger>
+            <MultiTrigger>
+              <MultiTrigger.Conditions>
+                <Condition Property="IsSelected" Value="True" />
+                <Condition Property="IsMouseOver" Value="False" />
+                <Condition Property="UIElement.IsKeyboardFocused" Value="True" />
+              </MultiTrigger.Conditions>
+              <Setter TargetName="Bd" Property="Background" Value="{StaticResource ComboBoxItem.ItemsviewSelected.Background}" />
+              <Setter TargetName="Bd" Property="BorderBrush" Value="{StaticResource ComboBoxItem.ItemsviewSelected.Border}" />
+            </MultiTrigger>
+            <MultiTrigger>
+              <MultiTrigger.Conditions>
+                <Condition Property="IsSelected" Value="True" />
+                <Condition Property="IsMouseOver" Value="True" />
+              </MultiTrigger.Conditions>
+              <Setter TargetName="Bd" Property="Background" Value="{StaticResource ComboBoxItem.ItemsviewSelectedHover.Background}" />
+              <Setter TargetName="Bd" Property="BorderBrush" Value="{StaticResource ComboBoxItem.ItemsviewSelectedHover.Border}" />
+            </MultiTrigger>
+            <MultiTrigger>
+              <MultiTrigger.Conditions>
+                <Condition Property="IsSelected" Value="True" />
+                <Condition Property="IsMouseOver" Value="False" />
+                <Condition Property="UIElement.IsKeyboardFocused" Value="False" />
+              </MultiTrigger.Conditions>
+              <Setter TargetName="Bd" Property="Background" Value="{StaticResource ComboBoxItem.ItemsviewSelectedNoFocus.Background}" />
+              <Setter TargetName="Bd" Property="BorderBrush" Value="{StaticResource ComboBoxItem.ItemsviewSelectedNoFocus.Border}" />
+            </MultiTrigger>
+            <MultiTrigger>
+              <MultiTrigger.Conditions>
+                <Condition Property="IsSelected" Value="False" />
+                <Condition Property="IsMouseOver" Value="False" />
+                <Condition Property="UIElement.IsKeyboardFocused" Value="True" />
+              </MultiTrigger.Conditions>
+              <Setter TargetName="Bd" Property="BorderBrush" Value="{StaticResource ComboBoxItem.ItemsviewFocus.Border}" />
+            </MultiTrigger>
+            <MultiTrigger>
+              <MultiTrigger.Conditions>
+                <Condition Property="IsSelected" Value="False" />
+                <Condition Property="IsMouseOver" Value="True" />
+                <Condition Property="UIElement.IsKeyboardFocused" Value="True" />
+              </MultiTrigger.Conditions>
+              <Setter TargetName="Bd" Property="Background" Value="{StaticResource ComboBoxItem.ItemsviewHoverFocus.Background}" />
+              <Setter TargetName="Bd" Property="BorderBrush" Value="{StaticResource ComboBoxItem.ItemsviewHoverFocus.Border}" />
+            </MultiTrigger>
+          </ControlTemplate.Triggers>
+        </ControlTemplate>
+      </Setter.Value>
+    </Setter>
+  </Style>
+
+
+  <!--
+    =================================================================
+    ComboBox
+    ==================================================================
+  -->
+  <ControlTemplate x:Key="OptionComboBoxTemplate" TargetType="{x:Type controls:OptionComboBox}">
+    <Grid x:Name="templateRoot" SnapsToDevicePixels="true">
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="*" />
+        <ColumnDefinition Width="0" MinWidth="{DynamicResource {x:Static SystemParameters.VerticalScrollBarWidthKey}}" />
+      </Grid.ColumnDefinitions>
+      <Popup
+        x:Name="PART_Popup"
+        Grid.ColumnSpan="2"
+        Margin="1,2"
+        AllowsTransparency="true"
+        IsOpen="{Binding IsDropDownOpen, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
+        Placement="Bottom"
+        PopupAnimation="{DynamicResource {x:Static SystemParameters.ComboBoxPopupAnimationKey}}">
+        <theme:SystemDropShadowChrome
+          x:Name="shadow"
+          MinWidth="{Binding ActualWidth, ElementName=templateRoot}"
+          MaxHeight="{TemplateBinding MaxDropDownHeight}"
+          Color="Transparent">
+          <Border
+            x:Name="DropDownBorder"
+            Background="#202020"
+            BorderBrush="Transparent"
+            BorderThickness="0"
+            CornerRadius="5">
+            <Grid>
+              <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+              </Grid.RowDefinitions>
+              <StackPanel Margin="0,5,0,0">
+                <RadioButton
+                  Margin="13,0,0,0"
+                  Content="Random"
+                  IsChecked="{Binding SelectRandom, RelativeSource={RelativeSource AncestorType={x:Type controls:OptionComboBox}}}" />
+                <Rectangle
+                  Height="1"
+                  Margin="0,5,0,0"
+                  HorizontalAlignment="Stretch"
+                  Fill="#0fffffff" />
+              </StackPanel>
+              <ScrollViewer
+                x:Name="DropDownScrollViewer"
+                Grid.Row="1"
+                Background="Transparent">
+                <Grid x:Name="grid" RenderOptions.ClearTypeHint="Enabled">
+                  <Grid.RowDefinitions>
+                    <RowDefinition />
+                    <RowDefinition />
+                  </Grid.RowDefinitions>
+                  <Canvas
+                    x:Name="canvas"
+                    Grid.Row="1"
+                    Width="0"
+                    Height="0"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Top">
+                    <Rectangle
+                      x:Name="OpaqueRect"
+                      Width="{Binding ActualWidth, ElementName=DropDownBorder}"
+                      Height="{Binding ActualHeight, ElementName=DropDownBorder}"
+                      Fill="Transparent" />
+                  </Canvas>
+                  <ItemsPresenter
+                    x:Name="ItemsPresenter"
+                    Grid.Row="1"
+                    KeyboardNavigation.DirectionalNavigation="Contained"
+                    SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                </Grid>
+              </ScrollViewer>
+            </Grid>
+          </Border>
+        </theme:SystemDropShadowChrome>
+      </Popup>
+      <ToggleButton
+        x:Name="toggleButton"
+        Grid.ColumnSpan="2"
+        Padding="{TemplateBinding Padding}"
+        Background="{TemplateBinding Background}"
+        BorderBrush="{TemplateBinding BorderBrush}"
+        BorderThickness="{TemplateBinding BorderThickness}"
+        IsChecked="{Binding IsDropDownOpen, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
+        Style="{StaticResource ComboBoxToggleButton}" />
+      <ContentPresenter
+        x:Name="contentPresenter"
+        Margin="{TemplateBinding Padding}"
+        HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+        VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+        Content="{TemplateBinding SelectionBoxItem}"
+        ContentStringFormat="{TemplateBinding SelectionBoxItemStringFormat}"
+        ContentTemplate="{TemplateBinding SelectionBoxItemTemplate}"
+        ContentTemplateSelector="{TemplateBinding ItemTemplateSelector}"
+        IsHitTestVisible="false"
+        SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+      <TextBlock
+        x:Name="RandomSelectedPresenter"
+        Margin="{TemplateBinding Padding}"
+        HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+        VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+        IsHitTestVisible="false"
+        SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+        Text="Random"
+        Visibility="Collapsed" />
+    </Grid>
+    <ControlTemplate.Triggers>
+      <Trigger SourceName="PART_Popup" Property="HasDropShadow" Value="true">
+        <Setter TargetName="shadow" Property="Margin" Value="0,0,5,5" />
+        <Setter TargetName="shadow" Property="Color" Value="#71000000" />
+      </Trigger>
+      <Trigger Property="HasItems" Value="false">
+        <Setter TargetName="DropDownBorder" Property="Height" Value="95" />
+      </Trigger>
+      <Trigger Property="SelectRandom" Value="true">
+        <Setter TargetName="RandomSelectedPresenter" Property="Visibility" Value="Visible" />
+        <Setter TargetName="contentPresenter" Property="Visibility" Value="Collapsed" />
+      </Trigger>
+      <MultiTrigger>
+        <MultiTrigger.Conditions>
+          <Condition Property="IsGrouping" Value="true" />
+          <Condition Property="VirtualizingPanel.IsVirtualizingWhenGrouping" Value="false" />
+        </MultiTrigger.Conditions>
+        <Setter Property="ScrollViewer.CanContentScroll" Value="false" />
+      </MultiTrigger>
+      <Trigger SourceName="DropDownScrollViewer" Property="ScrollViewer.CanContentScroll" Value="false">
+        <Setter TargetName="OpaqueRect" Property="Canvas.Top" Value="{Binding VerticalOffset, ElementName=DropDownScrollViewer}" />
+        <Setter TargetName="OpaqueRect" Property="Canvas.Left" Value="{Binding HorizontalOffset, ElementName=DropDownScrollViewer}" />
+      </Trigger>
+    </ControlTemplate.Triggers>
+  </ControlTemplate>
+  <Style TargetType="controls:OptionComboBox">
+    <Setter Property="Foreground" Value="White" />
+    <Setter Property="FontSize" Value="12" />
+    <Setter Property="Padding" Value="13,4,11,4" />
+    <Setter Property="MinHeight" Value="28" />
+    <Setter Property="Background" Value="#0fffffff" />
+    <Setter Property="BorderThickness" Value="1" />
+    <Setter Property="BorderBrush" Value="#0fffffff" />
+    <Setter Property="VerticalContentAlignment" Value="Center" />
+    <Setter Property="ItemContainerStyle" Value="{StaticResource OptionComboBoxItem}" />
+    <Setter Property="Template" Value="{StaticResource OptionComboBoxTemplate}" />
+  </Style>
+</ResourceDictionary>
